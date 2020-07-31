@@ -1,0 +1,64 @@
+<div class="page-header">
+  <h3 class="page-title">
+    Kiểm kho
+  </h3>
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+    </ol>
+  </nav>
+</div>
+<div class="row">
+  <div class="col-12 grid-margin">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">Danh sách phiếu nhập</h4>
+        <div class="table-responsive">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>
+                      <input type="checkbox" aria-label="Checkbox for following text input">
+                </th>
+                <th>#</th>
+                <th>Mã kiểm kho</th>
+                <th>Ngày kiểm kho</th>
+                <th>Tên hàng hóa</th>
+                <th>Loại hàng hóa</th>
+                <th>Đơn vị tính</th>
+                <th>Tổng số lượng</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let row of warehouse, let i = index">
+                <td>
+                  <input type="checkbox" aria-label="Checkbox for following text input">
+                </td>
+                <td>
+                  {{i+1}}
+                </td>
+                <td>
+                  {{row.firstName}}
+                </td>
+                <td>
+                  {{row.lastName}}
+                </td>
+                <td>
+                  {{row.email}}
+                </td>
+                <td>
+                  {{row.phone}}
+                </td>
+                <td>
+                  {{row.stuId}}
+                </td>
+                <td>
+                  10
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

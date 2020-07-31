@@ -1,0 +1,110 @@
+<div class="card-header bg-transparent border-success">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03"
+            aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <img src="img/lo.png" class="img-fluid ml-2 mr-5" alt="">
+        <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+            <form class="form-inline my-2 my-lg-0 ml-auto mr-auto">
+                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Tìm kiếm</button>
+            </form>
+            <ul class="navbar-nav ml-5 mt-2 mt-lg-0">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button"
+                        aria-haspopup="true" aria-expanded="false" style="color: royalblue;"><img src="img/hiepga.png"
+                            class="rounded-circle" alt="">nhanvien</a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="#">Thông tin</a>
+                        <a class="dropdown-item" href="#">Đăng xuất</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</div>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-2">
+            <label class="title">Bàn</label>
+            <div class="form-group d-inline-block">
+                <select class="form-control select" >
+                    <option value="{{item}}" *ngFor="let item of list"><a [routerLink]="['user/staffs/staffs-bill',item]" routerLinkActive="router-link-active" >{{item}}</a></option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-8 m-auto">
+            <h2 class="text-center">Hóa Đơn Thanh Toán</h2>
+            <table id="cart" class="table table-hover table-condensed">
+                <thead>
+                    <tr>
+                        <th style="width:40%">Tên món ăn</th>
+                        <th style="width:15%">Giá</th>
+                        <th style="width:8%">Số lượng</th>
+                        <th style="width:22%" class="text-center">Thành tiền</th>
+                        <th style="width:15%"> </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let food of table">
+                        <td data-th="Product">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <h6 class="nomargin"> {{food.name}} </h6>
+                                    <p></p>
+                                </div>
+                                <div class="col-sm-6 hidden-xs"><img src="img/la001.png" alt="" class="img-responsive"
+                                        width="140">
+                                </div>
+                            </div>
+                        </td>
+                        <td data-th="Price">{{food.price}}</td>
+                        <td data-th="Quantity">{{food.quantity}}
+                        </td>
+                        <td data-th="Subtotal" class="text-center">{{food.total}}</td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td><a [routerLink]="['../../staffs-info', tableId]" routerLinkActive="router-link-active"
+                                class="btn btn-warning"><i class="fa fa-angle-left"></i> Thêm món ăn</a>
+                        </td>
+                        <td colspan="2" class="hidden-xs"> </td>
+                        <td class="hidden-xs text-center"><strong>Tổng tiền {{cash}} đ</strong>
+                        </td>
+                        <td>
+                            <button type="button" class="btn btn-success width-190" (click)="showModal()">
+                                Thanh Toán
+                            </button>
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" bsModal #huyMon="bs-modal" [config]="{backdrop: 'static'}"
+     tabindex="-1" role="dialog" aria-labelledby="dialog-static-name">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close pull-right" aria-label="Close" (click)="hideModal()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <h3 class="text-center">Hoàn Tất Thanh Toán?</h3>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" (click)="hideModal()">Hủy</button>
+        <button class="btn btn-success" (click)="pay()">Hoàn Tất</button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,71 @@
+<div class="card-header bg-transparent border-success">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03"
+            aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <img src="../../../assets/images/foodslo.png" class="img-fluid ml-2 mr-5" alt="">
+        <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+            <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button"
+                        aria-haspopup="true" aria-expanded="false" style="color: royalblue;"><img
+                            src="../../../assets/images/foodshiepga.png" class="rounded-circle" alt="">nhanvien</a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="#">Thông tin</a>
+                        <a class="dropdown-item" href="#">Đăng xuất</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</div>
+<div class="m-2">
+    <table class="table table-hover table-dark">
+        <thead>
+            <tr>
+                <th >#Stt</th>
+                <th>Tên món</th>
+                <th>Số lượng</th>
+                <th class="text-center">Đang làm</th>
+                <th class="text-center">Đã hoàn thành</th>
+                <th>Thời gian</th>
+                <th> Bàn </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of listFoods; let i = index">
+                <td>{{ i+1 }}</td>
+                <td>{{ item.name }}</td>
+                <td>{{ item.quantity }}</td>
+                <td>
+                    <div *ngIf="item.status == 1; else elseBlock" class="center">
+                        <input class="form-check-input m-0" type="radio" name="do{{ i }}" (click)="doing(item.id)" checked>
+                    </div>
+                    <ng-template #elseBlock>
+                        <div class="center">
+                            <input class="form-check-input m-0" type="radio" name="do{{ i }}"
+                        (click)="doing(item.id)">
+                        </div>
+                    </ng-template>
+                </td>
+                <td>
+                    <div *ngIf="item.status == 2; else elseBlock2" class="center">
+                        <input class="form-check-input m-0" type="radio" name="do{{ i }}" id="inlineRadio1" (click)="done(item.id)"
+                        checked>
+                    </div>
+                    <ng-template #elseBlock2>
+                        <div class="center">
+                            <input class="form-check-input m-0" type="radio" name="do{{ i }}" (click)="done(item.id)"
+                        [value]="1">
+                        </div>
+                    </ng-template>
+                    
+                </td>
+                <td>{{ item.timeString }}</td>
+                <td>{{ item.table }}</td>
+            </tr>
+
+        </tbody>
+    </table>
+</div>

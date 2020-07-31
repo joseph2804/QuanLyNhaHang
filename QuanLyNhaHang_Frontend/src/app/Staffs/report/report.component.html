@@ -1,0 +1,9 @@
+<div class="form-group">
+    <label for="fromDate">Từ Ngày</label>
+    <input id="fromDate" class="form-control" type="date" name="fromDate" [(ngModel)]="fromDate">
+</div>
+<div class="form-group">
+    <label for="toDate">Từ Ngày</label>
+    <input id="toDate" class="form-control" type="date" name="toDate" [(ngModel)]="toDate">
+</div>
+<button class="btn btn-success" type="button" (click)="send()">Gửi</button>

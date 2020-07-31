@@ -1,0 +1,141 @@
+<div class="header bg-transparent border-success">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03"
+            aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <img src="../../../assets/images/foods/lo.png" class="img-fluid " alt="">
+        <button class="btn btn-outline-success ml-5" type="button" [routerLink]="['../']"
+            routerLinkActive="router-link-active">Danh Sách Bàn</button>
+        <button class="btn btn-danger" type="button" (click)="showModal($event, -1)">Hủy Bàn Này</button>
+        <div class="collapse navbar-collapse ml-auto width-400" id="navbarTogglerDemo03">
+            <span class="mr-5" style="color: black;">28/06/2020</span>
+            <span style="color: black;">10:10</span>
+            <ul class="navbar-nav mt-2 mt-lg-0 ml-3">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button"
+                        aria-haspopup="true" aria-expanded="false" style="color:black;"><img
+                            src="../../../assets/images/foods/hiepga.png" class="rounded-circle" alt="">&nbsp; Phục
+                        Vụ</a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="#">Thông tin</a>
+                        <a class="dropdown-item" href="#">Đăng xuất</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</div>
+<div>
+
+    <div class="xbody text-success m-3">
+        <div class="row">
+            <div class="col-4 text-center">
+                <h5 style="color: red;">Bàn : {{tableId}}</h5>
+            </div>
+            <div class="col-3 ml-auto text-right">
+                <form class="form-inline my-2 my-lg-0 ">
+                    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success my-2 my-sm-0 " type="submit">Tìm kiếm</button>
+                </form>
+
+            </div>
+        </div>
+    </div>
+    <div class="row">
+
+        <div class="col-md-7 ml-auto">
+            <section class="product-content clearfix">
+                <div class="product-block product-grid row clearfix">
+                    <div class="col-md-12">
+                        <h5 style="color: red;">Món Canh</h5>
+                        <p>-----------------------------</p>
+                    </div>
+                    <!--------------------------------------------------------------->
+                    <div class="col-md-4 col-sm-3 col-xs-12 product-resize product-item-box fixheight"
+                        style="height: auto;" *ngFor="let row of foods; let i = index">
+                        <div class="product-item">
+                            <div class="image image-resize img-fluid">
+                                <a href="#" (click)="select($event, row.id)">
+                                    <img src="../../../assets/images/foods/{{row.foo_Id}}.jpg"
+                                        class="img-responsive mg-fluid">
+                                </a>
+                                <span class="bg-warning d-inline-block mt-3">5<i class="fas fa-star"
+                                        style="color: yellow;"></i></span>
+                            </div>
+                            <div class="right-block">
+                                <h6 class="name">
+                                    <a href="" title=" ">{{row.foo_Name}}</a>
+                                </h6>
+                                <div class="price">
+                                    <span class="">{{row.foo_Price}}&nbsp;₫</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+        </div>
+    </div>
+</div>
+<!-- Modal huy mon -->
+<div class="modal fade" bsModal #confirmModal="bs-modal" [config]="{backdrop: 'static'}" tabindex="-1" role="dialog"
+    aria-labelledby="dialog-static-name">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close pull-right" aria-label="Close" (click)="hideModal()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <h3 class="text-center">{{message}}</h3>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" (click)="hideModal()">Không</button>
+                <button class="btn btn-success" (click)="cancel()">Đồng Ý</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="width-800">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th style="width:5%;">Stt</th>
+                <th style="width:40%">Tên món ăn</th>
+                <th>Giảm</th>
+                <th style="width:25%">Số lượng</th>
+                <th>Tăng</th>
+                <th style="width:30%">Giá</th>
+                <th>Hủy</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let row of table; let i = index">
+                <td [ngClass]="{'bg-aqua': row.status != 0}">{{i+1}}</td>
+                <td [ngClass]="{'bg-aqua': row.status != 0}">{{row.name}}</td>
+                <td [ngClass]="{'bg-aqua': row.status != 0}"><a href="#" (click)="decrease($event, row.productId)"><i
+                            class="fa fa-minus"></i></a></td>
+                <td [ngClass]="{'bg-aqua': row.status != 0}" data-th="Quantity"><input class="form-control text-center"
+                        value="{{row.quantity}}" type="text" readonly>
+                </td>
+                <td [ngClass]="{'bg-aqua': row.status != 0}"><a href="#" (click)="increase($event, row.productId)"><i
+                            class="fa fa-plus"></i></a></td>
+                <td [ngClass]="{'bg-aqua': row.status != 0}">{{row.total}}&nbsp;₫</td>
+                <td [ngClass]="{'bg-aqua': row.status != 0}"><a href="#" (click)="showModal($event, row.productId)"><i
+                            class="fa fa-times"></i></a></td>
+            </tr>
+
+        </tbody>
+    </table>
+    <nav class="navbar navbar-light bg-light">
+        <form class="form-inline w-100">
+
+            <button class="btn btn-outline-success m-auto" type="button" [routerLink]="['../..//staffs-bill',tableId]"
+                routerLinkActive="router-link-active">Thanh
+                Toán</button>
+        </form>
+    </nav>
+</div>

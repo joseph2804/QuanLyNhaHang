@@ -1,0 +1,69 @@
+<div class="mt-5" style="padding-top: 50px;">
+  <div class="modal-dialog">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h5 class="modal-title" id="staticBackdropLabel">Employee </h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+              </button>
+          </div>
+          <div class="modal-body">
+              <div class="form-group row pt-4">
+                  <label for="txtid" class="col-4 col-form-label repuire text-dark" style="text-align: left;"><strong>
+                          ID</strong></label>
+                  <div class="col-8">
+                      <input type="text" class="form-control" id="txtid" name="txtid">
+                  </div>
+              </div>
+              <div class="form-group row pb-2">
+                  <label for="txtfirstName" class="col-4 col-form-label repuire text-dark"
+                      style="text-align: left;"><strong>firstName</strong></label>
+                  <div class="col-8">
+                      <input type="text" class="form-control" id="txtfirstName"  name="txtfirstName">
+                  </div>
+              </div>
+              <div class="form-group row pb-2">
+                  <label for="txtlastname" class="col-4 col-form-label repuire text-dark"
+                      style="text-align: left;"><strong>Fullname</strong></label>
+                  <div class="col-8">
+                      <input type="text" class="form-control" id="txtlastname"  name="txtlastname">
+                  </div>
+              </div>
+              <div class="form-group row pb-2">
+                  <label for="txtgmail" class="col-4 col-form-label repuire text-dark"
+                      style="text-align: left;"><strong>Gmail</strong></label>
+                  <div class="col-8">
+                      <input type="text" class="form-control" id="txtgmail" name="txtgmail">
+                  </div>
+              </div>
+              <div class="form-group row pb-2">
+                  <label for="txtphone" class="col-4 col-form-label repuire text-dark"
+                      style="text-align: left;"><strong>Phone</strong></label>
+                  <div class="col-8">
+                      <input type="text" class="form-control" id="txtphone"  name="txtphone">
+                  </div>
+              </div>
+              <div class="form-group row">
+                  <label for="Gioitinh" class="col-4 col-form-label repuire" style="text-align: left;"><strong>Giới
+                          tính</strong></label>
+                  <div class="col-8 mt-2" style="text-align: left;">
+                      <div class="custom-control custom-radio custom-control-inline">
+                          <input type="radio" id="customRadioInline1" name="customRadioInline1"
+                              class="custom-control-input" [value]=0>
+                          <label class="custom-control-label" for="customRadioInline1" >Nam</label>
+                      </div>
+                      <div class="custom-control custom-radio custom-control-inline">
+                          <input type="radio" id="customRadioInline2" name="customRadioInline1"
+                              class="custom-control-input"[value]=1>
+                          <label class="custom-control-label" for="customRadioInline2">Nữ</label>
+                      </div>
+                  </div>
+              </div>
+              <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal" [routerLink]="['/student']">Close</button>
+                  <button type="button" class="btn btn-primary">Save</button>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>

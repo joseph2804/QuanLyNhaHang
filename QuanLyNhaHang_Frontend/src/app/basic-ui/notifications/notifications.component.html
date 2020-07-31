@@ -1,0 +1,168 @@
+<div class="page-header">
+  <h3 class="page-title">
+    Danh sách món ăn
+  </h3>
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <button type="button" class="btn bg-success" data-toggle="modal" data-target="#add" (click)="showmodal(0)"><i
+          class="fas fa-plus"></i>Thêm món ăn</button>
+    </ol>
+  </nav>
+</div>
+<div class="row">
+  <div class="col-12 grid-margin">
+    <div class="card">
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Hình ảnh</th>
+                <th>Tên món ăn</th>
+                <th>Tình trạng món ăn</th>
+                <th>Giá</th>
+                <th>Loại món ăn</th>
+                <th style="text-align: center;">Thao Tác</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let row of food | paginate: {id: 'listing_pagination',
+                                                                      itemsPerPage: 4,
+                                                                      currentPage : Page,
+                                                                      totalItems : totalRecords
+                }
+                let i = index;
+              ">
+                <td>{{i + 1}}</td>
+                <td><img src="./../../../assets/images/foods/{{row.foo_Id}}.jpg" class="mr-2" alt="image"></td>
+                <td>{{row.foo_Name}}</td>
+                <td>{{row.foo_Price}}</td>
+                <td>
+                  <div *ngIf="row.foo_Status==true">Còn hàng</div>
+                  <div *ngIf="row.foo_Status==false">Hết hàng</div>
+                </td>
+                <td>{{row.type.ty_Name}}</td>
+                <td style="text-align: center;">
+                  <button type="button" class="btn btn-link" (click)="showmodal(row.id)"><i
+                      class="far fa-edit text-success"></i></button>
+                  <button type="button" class="btn btn-link" (click)="showAlertmodal(row.id)"><i
+                      class="fas fa-trash-alt text-danger"></i></button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div>
+          <pagination-controls id="listing_pagination" maxSize="5" directionLinks="true" (pageChange)="Page = $event">
+          </pagination-controls>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--modal add , edit employee-->
+<div class="modal fade" bsModal #editModal="bs-modal" [config]="{backdrop: 'static'}" tabindex="-1" role="dialog"
+  aria-labelledby="dialog-static-name">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">{{action}} Nhân viên </h5>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="hidemodal()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group row pt-4">
+          <label for="txtid" class="col-4 col-form-label repuire text-dark" style="text-align: left;"><strong>
+              Tên món ăn</strong></label>
+          <div class="col-8">
+            <input type="text" class="form-control" id="txtid" [(ngModel)]="aFood.foo_Name" name="txtid">
+          </div>
+        </div>
+        <div class="form-group row pt-4">
+          <label for="txtid" class="col-4 col-form-label repuire text-dark" style="text-align: left;"><strong>
+              Tên nhân viên</strong></label>
+          <div class="col-8">
+            <select id="selectEmployee" class="form-control" #select [value]="aFood.id" name="selectEmployee">
+              <option *ngFor="let row of employee" [value]="row.id">
+                {{row.firstName}} {{row.lastName}}
+              </option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group row pt-4">
+          <label for="txtid" class="col-4 col-form-label repuire text-dark" style="text-align: left;"><strong>
+              Mã hình ảnh</strong></label>
+          <div class="col-8">
+            <input type="text" class="form-control" id="txtid" [(ngModel)]="aFood.foo_Id" name="txtid">
+          </div>
+        </div>
+        <div class="form-group row pb-2">
+          <label for="txtgmail" class="col-4 col-form-label repuire text-dark" style="text-align: left;"><strong>Giá món
+              ăn</strong></label>
+          <div class="col-8">
+            <input type="text" class="form-control" id="txtgmail" [(ngModel)]="aFood.foo_Price" name="txtgmail">
+          </div>
+        </div>
+        <div class="form-group row pb-2">
+          <label for="txtphone" class="col-4 col-form-label repuire text-dark" style="text-align: left;"><strong>Loại
+              món ăn</strong></label>
+          <div class="col-8">
+            <select id="selectType" class="form-control" #select [value]="aType.id" name="selectType">
+              <option *ngFor="let row of type" [value]="row.id">
+                {{row.ty_Name}}
+              </option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="Gioitinh" class="col-4 col-form-label repuire" style="text-align: left;"><strong>Tình trạng
+            </strong></label>
+          <div class="col-8 mt-2" style="text-align: left;">
+            <div class="custom-control custom-radio custom-control-inline">
+              <input type="radio" id="customRadioInline3" name="customRadioInline2" class="custom-control-input"
+                [(ngModel)]="aFood.foo_Status" [value]="false">
+              <label class="custom-control-label" for="customRadioInline3">Hết món</label>
+            </div>
+            <div class="custom-control custom-radio custom-control-inline">
+              <input type="radio" id="customRadioInline4" name="customRadioInline2" class="custom-control-input"
+                [(ngModel)]="aFood.foo_Status" [value]="true">
+              <label class="custom-control-label" for="customRadioInline4">Còn món</label>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="hidemodal()">Close</button>
+        <button type="button" class="btn btn-primary" (click)="save(select.value)">Save</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--Modal delete employee-->
+<div class="modal fade" bsModal #alertModal="bs-modal" [config]="{backdrop: 'static'}" tabindex="-1" role="dialog"
+  aria-labelledby="dialog-static-name">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">{{action}} Nhân viên </h5>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="hideAlertModal()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group row pt-4">
+          <label for="txtid" class="col col-form-label repuire text-dark" style="text-align: left;"><strong>
+              Bạn có muốn xóa nhân viên</strong></label>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)='saveDelete()'>Xóa</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="hideAlertModal()">Hủy bỏ</button>
+      </div>
+    </div>
+  </div>
+</div>

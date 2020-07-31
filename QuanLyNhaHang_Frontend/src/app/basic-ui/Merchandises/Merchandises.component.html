@@ -1,0 +1,175 @@
+<div class="page-header">
+  <h3 class="page-title">
+    Hàng hóa
+  </h3>
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <button type="button" class="btn bg-success" data-toggle="modal" data-target="#add" (click)="showmodal(0)"><i
+        class="fas fa-plus"></i>Thêm hàng hóa</button>
+    </ol>
+  </nav>
+</div>
+<div class="row">
+  <div class="col-12 grid-margin">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">Danh sách hàng hóa</h4>
+        <div class="table-responsive">
+          <table class="table table-striped" style="text-align: center;">
+            <thead>
+              <tr>
+                <th>
+                      <input type="checkbox" aria-label="Checkbox for following text input">
+                </th>
+                <th>#</th>
+                <th>Hình ảnh</th>
+                <th>Tên hàng hóa</th>
+                <th>Giá hàng hóa</th>
+                <th>Số lượng</th>
+                <th>Loại Hàng hóa</th>
+                <th>Đơn vị tính</th>
+
+                <th>Thao tác</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let row of mechandises | paginate: {id: 'listing_pagination',
+                                                                      itemsPerPage: 5,
+                                                                      currentPage : Page,
+                                                                      totalItems : totalRecords
+                }
+                let i = index;
+              ">
+                <td>
+                  <input type="checkbox" aria-label="Checkbox for following text input">
+                </td>
+                <td>
+                  {{i +1}}
+                </td>
+                <td>
+                  <img src="assets/images/faces/thitbo.jpg" class="mr-2" alt="image">
+                </td>
+                <td>
+                  {{row.pro_Name}}
+                </td>
+                <td>
+                  {{row.pro_Price}}
+                </td>
+                <td>
+                  {{row.quantity}}
+                </td>
+                <td>
+                  <div *ngIf="row.pro_Type == false;">Nước uống</div>
+                  <div *ngIf="row.pro_Type == true;">Đồ ăn</div>
+                </td>
+                <td>
+                  {{row.pro_Unit}}
+                </td>
+                <td>
+                  <button type="button" class="btn btn-link" (click)="showmodal(row.id)"><i class="far fa-edit text-success"></i></button>
+                  <!--<a [routerLink]="['/student',row.id]"><i class="far fa-edit text-success"></i></a>-->
+                  <button type="button" class="btn btn-link" (click)="showAlertmodal(row.id)"><i class="fas fa-trash-alt text-danger"></i></button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div>
+          <pagination-controls id="listing_pagination" maxSize="5" directionLinks="true" (pageChange)="Page = $event"></pagination-controls>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+ <!--modal add , edit employee-->
+<div class="modal fade" bsModal #editModal="bs-modal" [config]="{backdrop: 'static'}" tabindex="-1" role="dialog"
+aria-labelledby="dialog-static-name">
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title" id="staticBackdropLabel">{{action}} Hàng hóa </h5>
+      <button type="button" class="close pull-right" aria-label="Close" (click)="hidemodal()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group row pb-2">
+        <label for="txtfirstName" class="col-4 col-form-label repuire text-dark"
+          style="text-align: left;"><strong>Tên Hàng Hóa</strong></label>
+        <div class="col-8">
+          <input type="text" class="form-control" id="txtfirstName" [(ngModel)]="aMechandises.pro_Name"
+            name="txtfirstName">
+        </div>
+      </div>
+      <div class="form-group row pb-2">
+        <label for="txtlastname" class="col-4 col-form-label repuire text-dark"
+          style="text-align: left;"><strong>Giá hàng hóa</strong></label>
+        <div class="col-8">
+          <input type="text" class="form-control" id="txtlastname" [(ngModel)]="aMechandises.pro_Price"
+            name="txtlastname">
+        </div>
+      </div>
+        <div class="form-group row pb-2">
+          <label for="txtgmail" class="col-4 col-form-label repuire text-dark"
+          style="text-align: left;"><strong>Đơn vị tính</strong></label>
+        <div class="col-8">
+          <input type="text" class="form-control" id="txtgmail" [(ngModel)]="aMechandises.pro_Unit" name="txtgmail">
+        </div>
+      </div>
+      <div class="form-group row pb-2">
+        <label for="txtphone" class="col-4 col-form-label repuire text-dark"
+          style="text-align: left;"><strong>Số lượng</strong></label>
+        <div class="col-8">
+          <input type="text" class="form-control" id="txtphone" [(ngModel)]="aMechandises.quantity" name="txtphone">
+        </div>
+      </div>
+
+
+      <div class="form-group row">
+        <label for="Gioitinh" class="col-4 col-form-label repuire" style="text-align: left;"><strong>Loại Hàng hóa</strong></label>
+        <div class="col-8 mt-2" style="text-align: left;">
+          <div class="custom-control custom-radio custom-control-inline">
+            <input type="radio" id="customRadioInline1" name="customRadioInline1" class="custom-control-input"
+              [(ngModel)]="aMechandises.pro_Type" [value]="false">
+            <label class="custom-control-label" for="customRadioInline1">Đồ Uống</label>
+          </div>
+          <div class="custom-control custom-radio custom-control-inline">
+            <input type="radio" id="customRadioInline2" name="customRadioInline1" class="custom-control-input"
+              [(ngModel)]="aMechandises.pro_Type" [value]="true">
+            <label class="custom-control-label" for="customRadioInline2">Thực phẩm</label>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="hidemodal()">Close</button>
+      <button type="button" class="btn btn-primary" (click)="save()">Save</button>
+    </div>
+  </div>
+</div>
+</div>
+
+<!--Modal delete employee-->
+<div class="modal fade" bsModal #alertModal="bs-modal" [config]="{backdrop: 'static'}" tabindex="-1" role="dialog"
+aria-labelledby="dialog-static-name">
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title" id="staticBackdropLabel">{{action}} Nhân viên </h5>
+      <button type="button" class="close pull-right" aria-label="Close" (click)="hideAlertModal()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group row pt-4">
+        <label for="txtid" class="col col-form-label repuire text-dark" style="text-align: left;"><strong>
+            Bạn có muốn xóa nhân viên</strong></label>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-primary" (click)='saveDelete()'>Xóa</button>
+      <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="hideAlertModal()">Hủy bỏ</button>
+    </div>
+  </div>
+</div>
+</div>
